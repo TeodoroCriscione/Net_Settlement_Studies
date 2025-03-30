@@ -2,6 +2,27 @@ from collections import defaultdict, deque
 import bisect
 from heapq import heappush, heappop
 
+"""
+1. Add edge (u → v, t_max)
+
+2. Compute:
+   A = ancestors(u)
+   D = descendants(v)
+   affected_nodes = A ∩ D ∪ {u, v}
+
+3. If A ∩ D == ∅:
+      → No directed cycle possible → SKIP
+
+4. Else:
+      → Check for time-respecting path v → u using _has_temporal_path()
+
+5. If path exists:
+      → Run _find_best_temporal_cycle_from_node()
+
+6. Else:
+      → SKIP full cycle search
+"""
+
 class TemporalTransactionGraph:
     def __init__(self):
         self.edges = defaultdict(list)
